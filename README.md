@@ -2,14 +2,18 @@
 Description:
 ============
 系统实现内容：
+
 评估指定目录下所有png或者jpg图片转换为不同质量[50,75,95,lossness]的webp是否合理。合理性是从性能和图片size两个维度考虑。
+
 原理：
+
 values是兼顾图片size和图片解码时间按6:4算出的权衡值.values小于1,即是建议优化为webp图片格式.
 
 Usage:
 =========
 1.首先要手动锁频锁核
-   步骤：
+
+	步骤：
        1). 关闭内核调度
         adb root;adb remount;
         adb shell
@@ -29,25 +33,28 @@ Usage:
 		echo $CPU_FREQ > /sys/devices/system/cpu/cpu{i}/cpufreq/scaling_max_freq
 
 2.安装解码apk
-     adb install -r decodeBitmap.apk
+
+	adb install -r decodeBitmap.apk
      
 3.设置手机状态
+	
 	将手机自动锁屏设置为永不
 	
 4.运行脚步
 
-python Evaluwebp.py dir [sizeWeights] [Specifiedsize] [devices]
+	python Evaluwebp.py dir [sizeWeights] [Specifiedsize] [devices]
 
-dir 指定的目录,此目录以及子目录下所有png或者jpg图片将可能被转换为webp，图片将以路径和name命名。
-sizeWeights 解码时间和图片size权重，默认是4:6，sizeWeights=6。
-Specifiedsize 图片大小超过Specifiedsize才转换webp，默认Specifiedsize=50KB，Specifiedsize单位是KB。
-devices 是device name，只有一个终端时可以不用设置，默认是空。
+	dir： 指定的目录,此目录以及子目录下所有png或者jpg图片将可能被转换为webp，图片将以路径和name命名。
+	sizeWeights： 解码时间和图片size权重，默认是4:6，sizeWeights=6。
+	Specifiedsize： 图片大小超过Specifiedsize才转换webp，默认Specifiedsize=50KB，Specifiedsize单位是KB。
+	devices： 是device name，只有一个终端时可以不用设置，默认是空。
 
-eg：python Evaluwebp.py  ~/demo/Life
+	eg：python Evaluwebp.py  ~/demo/Life
 
 
 FAQ:
 ========
+
 1."/bin/sh: 1: cwebp: not found"
 
 first method(cp):
