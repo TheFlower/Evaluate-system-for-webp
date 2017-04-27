@@ -31,7 +31,7 @@ Usage:
 		echo 1 >/sys/devices/system/cpu/cpu4/online
 		echo 1 >/sys/devices/system/cpu/cpu5/online
 
-		4))写cpu频率
+	4)写cpu频率
 		查看cpu可以写的频率,以pro6为例：
 		查看小核可用频率
 		cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies
