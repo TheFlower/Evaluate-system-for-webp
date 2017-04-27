@@ -19,18 +19,33 @@ Usage:
         adb shell
 		echo 0 > /proc/hps/enabled　　
        2).关闭mtk频率调度
-        adb root;adb remount;
-        adb shell
+        	adb root;adb remount;
+        	adb shell
 		echo 0 > /proc/ppm/enabled
-		3).写cpu是否上线
-		此时i=6；将cpu0～cpu5都上线
-		echo 1 >/sys/devices/system/cpu/cpu${i}/online
+	3).写cpu是否上线
+		将cpu0～cpu5都上线
+		echo 1 >/sys/devices/system/cpu/cpu0/online
+		echo 1 >/sys/devices/system/cpu/cpu1/online
+		echo 1 >/sys/devices/system/cpu/cpu2/online
+		echo 1 >/sys/devices/system/cpu/cpu3/online
+		echo 1 >/sys/devices/system/cpu/cpu4/online
+		echo 1 >/sys/devices/system/cpu/cpu5/online
+
 		4))写cpu频率
-		此时i=6
-		查看cpu可以写的频率
-		cat /sys/devices/system/cpu/cpu{i}/cpufreq/scaling_available_frequencies
-		echo $CPU_FREQ > /sys/devices/system/cpu/cpu{i}/cpufreq/scaling_min_freq
-		echo $CPU_FREQ > /sys/devices/system/cpu/cpu{i}/cpufreq/scaling_max_freq
+		查看cpu可以写的频率,以pro6为例：
+		查看小核可用频率
+		cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies
+		1547000 1495000 1443000 1391000 1339000 1274000 1222000 1118000 1014000 897000 806000 715000 624000 481000 338000 221000
+		echo 1547000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+		echo 1547000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+		查看中核可用频率
+		cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies
+		2002000 1950000 1885000 1820000 1755000 1703000 1625000 1495000 1352000 1209000 1079000 962000 832000 650000 468000 325000
+		echo 2002000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+		echo 2002000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+		
+此时手机４小核以1547000频率和两个中核以2002000在跑，排除了频率因素导致解码时间差异性．
+
 
 2.安装解码apk
 
@@ -80,6 +95,12 @@ third method(build the cwebp yourself for linux):
 	make
 	sudo make install
 ```
+
+2."ImportError: No module named xlwt"
+Python：使用第三方库xlwt来写Excel，需要安装如下：
+	
+	pip install xlwt
+安装可参考官方文档：https://pypi.python.org/pypi/xlwt
 
 Discuss:
 ========
